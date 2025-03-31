@@ -1,0 +1,32 @@
+package app.web;
+
+import app.exceptions.EmailAlreadyExistException;
+import app.exceptions.InvalidInputException;
+import app.web.dto.ErrorResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ControllerAdvice
+public class ExceptionAdvice {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> emailAlreadyExist (EmailAlreadyExistException exception) {
+
+        ErrorResponse errorResponse = new ErrorResponse(400, exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ErrorResponse> invalidInput (InvalidInputException exception) {
+
+        ErrorResponse errorResponse = new ErrorResponse(400, exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+}
