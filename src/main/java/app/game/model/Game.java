@@ -27,7 +27,7 @@ public class Game {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String imgUrl;
 
     @ManyToOne
