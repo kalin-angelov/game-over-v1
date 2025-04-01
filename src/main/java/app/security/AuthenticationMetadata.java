@@ -3,6 +3,7 @@ package app.security;
 import app.user.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
