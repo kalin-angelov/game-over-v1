@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -71,6 +72,10 @@ public class UserService implements UserDetailsService {
                 user.getRole(),
                 user.isActive()
         );
+    }
+
+    public User findUserById(UUID id) {
+        return userRepository.findById(id).orElseThrow(() -> new InvalidInputException("Invalid User."));
     }
 
     public void checkingUserCredentials (UserLoginRequest userLoginRequest) {
