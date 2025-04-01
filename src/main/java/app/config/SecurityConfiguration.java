@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(matchers -> matchers
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/games/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
