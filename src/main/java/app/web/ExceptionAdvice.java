@@ -2,6 +2,7 @@ package app.web;
 
 import app.exceptions.EmailAlreadyExistException;
 import app.exceptions.InvalidInputException;
+import app.exceptions.NotFoundException;
 import app.web.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,14 @@ public class ExceptionAdvice {
         ErrorResponse errorResponse = new ErrorResponse(400, exception.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> notFound (NotFoundException exception) {
+
+        ErrorResponse errorResponse = new ErrorResponse(404, exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }
