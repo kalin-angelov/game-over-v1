@@ -32,7 +32,7 @@ public class DtoMapper {
 
         return GameResponse.builder()
                 .successful(true)
-                .message("Game successfully created.")
+                .message("Game successfully saved.")
                 .game(game)
                 .build();
     }
