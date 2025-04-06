@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class UserRegisterResponse {
 
-    private String email;
+    private int status;
     private boolean successful;
     private String message;
 }
