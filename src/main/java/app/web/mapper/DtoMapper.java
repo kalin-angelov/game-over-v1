@@ -6,6 +6,7 @@ import app.web.dto.GameResponse;
 import app.web.dto.UserLoginResponse;
 import app.web.dto.UserRegisterResponse;
 import lombok.experimental.UtilityClass;
+import org.springframework.http.HttpStatus;
 
 @UtilityClass
 public class DtoMapper {
@@ -13,7 +14,7 @@ public class DtoMapper {
     public static UserRegisterResponse toRegisterResponse(User user) {
 
         return UserRegisterResponse.builder()
-                .email(user.getEmail())
+                .status(HttpStatus.OK.value())
                 .successful(true)
                 .message("User successfully register.")
                 .build();
