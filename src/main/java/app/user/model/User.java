@@ -2,6 +2,7 @@ package app.user.model;
 
 import app.game.model.Game;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,12 +25,14 @@ public class User {
     private UUID id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email cant be empty")
     private String email;
 
     @Column(unique = true)
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "Password cant be empty")
     private String password;
 
     private String imgUrl;
