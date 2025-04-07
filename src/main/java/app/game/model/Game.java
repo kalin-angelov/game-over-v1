@@ -2,6 +2,7 @@ package app.game.model;
 
 import app.user.model.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,12 +23,15 @@ public class Game {
     private UUID id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Title cant be empty")
     private String title;
 
     @Column(nullable = false)
+    @NotBlank(message = "Description cant be empty")
     private String description;
 
     @Column(nullable = false, length = 1000)
+    @NotBlank(message = "ImgURL cant be empty")
     private String imgUrl;
 
     @ManyToOne
@@ -35,6 +39,7 @@ public class Game {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @NotBlank(message = "Platform cant be empty")
     private GamePlatform platform;
 
     @Column(nullable = false)
