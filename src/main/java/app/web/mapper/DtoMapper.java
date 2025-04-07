@@ -23,6 +23,7 @@ public class DtoMapper {
     public static UserLoginResponse toLoginResponse(String token) {
 
         return UserLoginResponse.builder()
+                .status(HttpStatus.OK.value())
                 .token(token)
                 .successful(true)
                 .message("Welcome")
