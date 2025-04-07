@@ -31,8 +31,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(matchers -> matchers
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/games/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/api/v1/games/**").permitAll()
+//                        .requestMatchers("/api/v1/games/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
