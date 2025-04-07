@@ -22,13 +22,13 @@ public class ExceptionAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<ErrorResponse> invalidInput (InvalidInputException exception) {
 
-        ErrorResponse errorResponse = new ErrorResponse(400, exception.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(403, exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
