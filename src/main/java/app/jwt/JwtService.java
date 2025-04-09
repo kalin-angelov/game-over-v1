@@ -1,8 +1,10 @@
 package app.jwt;
 
+import app.security.AuthenticationMetadata;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,26 +21,7 @@ public class JwtService {
 
     Dotenv dotenv = Dotenv.load();
     String secretKey = dotenv.get("JWT_SECRET_KEY");
-
-    public String generateToken(String email) {
-        Map<String, Object> claims = new HashMap<>();
-        return creteToken(claims, email);
-    }
-
-    private String creteToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .claims(claims)
-                .subject(subject)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
-                .signWith(getSigningKey())
-                .compact();
-    }
-
-    private SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
+    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
     public String extractEmail(String token) {
         return extractClaims(token, Claims::getSubject);
@@ -55,18 +38,33 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public String generateToken(AuthenticationMetadata metadata) {
+        Map<String, Object> claims = new HashMap<>();
+        return creteToken(claims, metadata.getEmail());
+    }
+
+    private String creteToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+
+    public Boolean validateToken(String token, AuthenticationMetadata metadata) {
         final String email = extractEmail(token);
-        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (email.equals(metadata.getEmail()) && !isTokenExpired(token));
     }
 }

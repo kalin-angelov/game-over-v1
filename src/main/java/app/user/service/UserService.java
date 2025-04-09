@@ -67,10 +67,13 @@ public class UserService implements UserDetailsService {
 
         return new AuthenticationMetadata(
                 user.getId(),
+                user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getImgUrl(),
                 user.getRole(),
-                user.isActive()
+                user.isActive(),
+                user.getGames()
         );
     }
 
