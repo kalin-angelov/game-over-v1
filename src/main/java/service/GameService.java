@@ -1,4 +1,4 @@
-package app.game.service;
+package service;
 
 import app.exceptions.InvalidInputException;
 import app.exceptions.NotFoundException;
@@ -7,7 +7,6 @@ import app.game.repository.GameRepository;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.GameRequest;
-import app.web.dto.GameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package app.web;
 
 import app.game.model.Game;
-import app.game.service.GameService;
+import service.GameService;
 import app.security.AuthenticationMetadata;
 import app.user.service.UserService;
 import app.web.dto.GameRequest;
